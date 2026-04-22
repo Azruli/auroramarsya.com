@@ -4,18 +4,25 @@ document.addEventListener("DOMContentLoaded", function(){
 function next(id){
  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
  document.getElementById(id).classList.add("active");
+
+ // 🔥 delay lebih lama biar DOM siap
+ if(id === "p2"){
+   setTimeout(spreadPhotos, 200);
+ }
 }
 window.next = next;
 
 // STAR
-let stars = document.getElementById("stars");
-for(let i=0;i<20;i++){
- let s=document.createElement("img");
- s.src="https://cdn-icons-png.flaticon.com/512/616/616490.png";
- s.className="starfish";
- s.style.top=Math.random()*100+"%";
- s.style.left=Math.random()*100+"%";
- stars.appendChild(s);
+var stars = document.getElementById("stars");
+if(stars && stars.children.length === 0){
+ for(let i=0;i<20;i++){
+  let s=document.createElement("img");
+  s.src="https://cdn-icons-png.flaticon.com/512/616/616490.png";
+  s.className="starfish";
+  s.style.top=Math.random()*100+"%";
+  s.style.left=Math.random()*100+"%";
+  stars.appendChild(s);
+ }
 }
 
 // MUSIC
@@ -40,65 +47,60 @@ function jawab(res){
 }
 window.jawab = jawab;
 
-// ================= COUNTDOWN =================
-let birthday = new Date().getTime() + 5000;
+var targetDate = new Date("2026-04-23 00:00:00");
 
-let interval = setInterval(()=>{
+var interval = setInterval(()=>{
  let now = new Date().getTime();
- let d = birthday - now;
+ let distance = targetDate - now;
 
- let days = Math.floor(d/(1000*60*60*24));
- let hours = Math.floor((d%(1000*60*60*24))/(1000*60*60));
- let minutes = Math.floor((d%(1000*60*60))/(1000*60));
- let seconds = Math.floor((d%(1000*60))/1000);
+ let days = Math.floor(distance/(1000*60*60*24));
+ let hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+ let minutes = Math.floor((distance%(1000*60*60))/(1000*60));
+ let seconds = Math.floor((distance%(1000*60))/1000);
 
- document.getElementById("countdown").innerHTML =
-  days+"h "+hours+"j "+minutes+"m "+seconds+"d";
+ document.getElementById("days").innerText = days;
+ document.getElementById("hours").innerText = hours;
+ document.getElementById("minutes").innerText = minutes;
+ document.getElementById("seconds").innerText = seconds;
 
- if(d <= 0){
+ if(distance <= 0){
   clearInterval(interval);
 
   document.getElementById("countdown").innerHTML = "🎉 Sudah waktunya!";
-  
+  document.getElementById("lockMessage").innerHTML = "💖 Sekarang sudah bisa dibuka!";
+
   let btn = document.getElementById("startBtn");
   btn.disabled = false;
-  btn.onclick = ()=>next('p1b');
-
-  document.getElementById("lockMessage").innerHTML="💖 Sekarang sudah bisa dibuka!";
+  btn.onclick = () => next('p1b');
  }
 },1000);
+next('p2');
+}
 
-// ================= FOTO STACK (FIX FINAL) =================
-setTimeout(()=>{
-
+// 🔥 FOTO BERSEBARAN
+function spreadPhotos(){
  let photos = document.querySelectorAll(".photo");
 
- photos.forEach((photo, index) => {
+ photos.forEach((photo)=>{
 
-  photo.style.zIndex = index + 1;
+  let x = Math.random() * (window.innerWidth - 150);
+  let y = Math.random() * (window.innerHeight - 200);
+  let rotate = (Math.random() * 60) - 30;
 
-  photo.onclick = function(e){
-    e.stopPropagation();
+  photo.style.position = "fixed";
+  photo.style.left = x + "px";
+  photo.style.top = y + "px";
+  photo.style.transform = "rotate("+rotate+"deg)";
+  photo.style.zIndex = Math.floor(Math.random() * 100);
 
-    photos.forEach(p=>{
-      p.classList.remove("active");
-      p.style.zIndex = 1;
-    });
-
+  photo.onclick = function(){
+    photos.forEach(p=>p.classList.remove("active"));
     this.classList.add("active");
     this.style.zIndex = 9999;
+    this.style.transform = "scale(1.3) rotate(0deg)";
   };
 
  });
-
-},300);
-
-// ================= VIDEO FIX =================
-let video = document.querySelector("video");
-if(video){
- video.addEventListener("error", ()=>{
-   alert("Video tidak ditemukan / format salah ❌");
- });
 }
 
-});
+);

@@ -5,7 +5,7 @@ body {
   color: #5a4a4a;
 }
 
-/* background tidak boleh menangkap klik */
+/* background */
 .bg {
   position: fixed;
   width: 100%;
@@ -24,6 +24,7 @@ body {
   pointer-events: none;
 }
 
+/* star */
 .starfish {
   position: absolute;
   width: 40px;
@@ -74,51 +75,72 @@ button:disabled {
   right: 20px;
 }
 
-/* ================= FOTO ================= */
-
+/* 🔥 override agar foto keluar dari card */
 .photo-stack {
   position: relative;
   width: 260px;
-  height: 360px;
+  height: 360;
+  margin: auto;
   z-index: 100;
+  pointer-events: none;
 }
 
+/* 🔥 FIX UTAMA DI SINI */
 .photo {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  width: 120px;
+  height: 160px;
   object-fit: cover;
   border-radius: 15px;
   cursor: pointer;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
   transition: 0.4s;
-  pointer-events: auto;
 }
 
-/* efek tumpukan */
-.photo:nth-child(1){ transform: rotate(-10deg); }
-.photo:nth-child(2){ transform: rotate(8deg); }
-.photo:nth-child(3){ transform: rotate(-6deg); }
-.photo:nth-child(4){ transform: rotate(5deg); }
-.photo:nth-child(5){ transform: rotate(-4deg); }
-.photo:nth-child(6){ transform: rotate(3deg); }
-.photo:nth-child(7){ transform: rotate(-2deg); }
-.photo:nth-child(8){ transform: rotate(2deg); }
-.photo:nth-child(9){ transform: rotate(-1deg); }
-.photo:nth-child(10){ transform: rotate(1deg); }
-
-/* hover */
 .photo:hover {
-  transform: scale(1.05) !important;
+  transform: scale(1.05);
 }
 
-/* aktif */
 .photo.active {
-  transform: scale(1.2) translateY(-30px) rotate(0deg) !important;
+  transform: scale(1.3) rotate(0deg) !important;
   z-index: 9999 !important;
-  box-shadow: 0  20px 40px rgba(0,0,0,0.4);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+#countdown {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #5a4a4a;
+}
+  .countdown {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+}
+.time-box {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+  padding: 10px;
+  border-radius: 15px;
+  width: 70px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(255,105,180,0.3);
+  animation: pulse 2s infinite;
 }
 
-#countdown {
-  margin-top: 10px;
+.time-box span {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ff4d88;
+}
+
+.time-box p {
+  font-size: 12px;
+  margin: 0;
+  color: #555;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
