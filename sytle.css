@@ -75,35 +75,35 @@ button:disabled {
   right: 20px;
 }
 
-/* 🔥 override agar foto keluar dari card */
 .photo-stack {
   position: relative;
-  width: 260px;
-  height: 360;
+  width: 180px;
+  height: 240px;
   margin: auto;
-  z-index: 100;
-  pointer-events: none;
 }
 
-/* 🔥 FIX UTAMA DI SINI */
 .photo {
-  position: fixed;
-  width: 120px;
-  height: 160px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 15px;
   cursor: pointer;
   transition: 0.4s;
 }
 
-.photo:hover {
-  transform: scale(1.05);
-}
+/* efek tumpukan */
+.photo:nth-child(1){ transform: rotate(-8deg); }
+.photo:nth-child(2){ transform: rotate(6deg); }
+.photo:nth-child(3){ transform: rotate(-5deg); }
+.photo:nth-child(4){ transform: rotate(4deg); }
+.photo:nth-child(5){ transform: rotate(-3deg); }
 
+/* aktif */
 .photo.active {
-  transform: scale(1.3) rotate(0deg) !important;
-  z-index: 9999 !important;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  transform: scale(1.05) translateY(-15px) rotate(0deg) !important;
+  z-index: 999;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
 }
 #countdown {
   font-size: 18px;

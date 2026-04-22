@@ -40,9 +40,9 @@ window.toggleMusic = toggleMusic;
 function jawab(res){
  let j = document.getElementById("jawaban");
  if(res){
-  j.innerHTML="💖 Aku juga sayang kamu!";
+  j.innerHTML="Iloveee youuuu Cintaaaakuuuu💖";
  } else {
-  j.innerHTML="😢 Jangan gitu... pilih yang atas ya 💕";
+  j.innerHTML="dont be like that!!😢";
  }
 }
 window.jawab = jawab;
@@ -75,32 +75,6 @@ var interval = setInterval(()=>{
  }
 },1000);
 next('p2');
-}
-
-// 🔥 FOTO BERSEBARAN
-function spreadPhotos(){
- let photos = document.querySelectorAll(".photo");
-
- photos.forEach((photo)=>{
-
-  let x = Math.random() * (window.innerWidth - 150);
-  let y = Math.random() * (window.innerHeight - 200);
-  let rotate = (Math.random() * 60) - 30;
-
-  photo.style.position = "fixed";
-  photo.style.left = x + "px";
-  photo.style.top = y + "px";
-  photo.style.transform = "rotate("+rotate+"deg)";
-  photo.style.zIndex = Math.floor(Math.random() * 100);
-
-  photo.onclick = function(){
-    photos.forEach(p=>p.classList.remove("active"));
-    this.classList.add("active");
-    this.style.zIndex = 9999;
-    this.style.transform = "scale(1.3) rotate(0deg)";
-  };
-
- });
 }
 
 );

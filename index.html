@@ -83,8 +83,8 @@ button:disabled {
 /* FOTO STACK */
 .photo-stack {
   position: relative;
-  width: 260px;
-  height: 360px;
+  width: 180px;
+  height: 240px;
   margin: auto;
   z-index: 100;
 }
@@ -113,8 +113,7 @@ button:disabled {
 
 /* klik aktif */
 .photo.active {
-  transform: scale(1.2) translateY(-30px) rotate(0deg) !important;
-  z-index: 9999 !important;
+  transform: scale(1.05) translateY(-10px) rotate(0deg) !important;
 }
 
 /* MUSIC BUTTON */
@@ -123,6 +122,28 @@ button:disabled {
   top: 20px;
   right: 20px;
 }
+/* ===== TAMBAHAN EFFECT ===== */
+
+#yesBtn {
+  transition: 0.3s;
+  box-shadow: 0 0 10px pink;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px pink;
+  }
+  to {
+    box-shadow: 0 0 25px hotpink, 0 0 40px deeppink;
+  }
+}
+
+#noBtn {
+  position: relative;
+  transition: 0.2s;
+}
+
 </style>
 </head>
 
@@ -245,8 +266,8 @@ I will always to try to be the best</p>
 <div class="card">
 <h2>i wanna ask something</h2>
 <p>You want to stay with me, right?</p>
-<button onclick="jawab(true)">Yeah, My Goodboy</button>
-<button onclick="jawab(false)">NO</button>
+<button Id="yesBtn" onclick="jawab(true)">Yeah, My Goodboy</button>
+<button Id="noBtn" onmouseover="moveNo()" onclick="jawabNo()">NO</button>
 <p id="jawaban"></p>
 </div>
 </div>
@@ -257,9 +278,6 @@ I will always to try to be the best</p>
 function next(id){
  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
  document.getElementById(id).classList.add("active");
-  if(id === "p2"){
-   setTimeout(spreadPhotos, 200);
- }
 }
 
 // STAR
@@ -286,50 +304,77 @@ function toggleMusic(){
 // JAWAB
 function jawab(res){
  let j = document.getElementById("jawaban");
- j.innerHTML = res ? "💖 Aku juga sayang kamu!" : "😢 Jangan gitu...";
+ j.innerHTML = res ? "Iloveeeeee youuuuu hiduuupkuuu" : "😢 dont be like that";
 }
 
 // FOTO CLICK FIX
-setTimeout(()=>{
- document.querySelectorAll(".photo").forEach((photo, index)=>{
+let photos = document.querySelectorAll(".photo");
 
-  photo.style.zIndex = index + 1;
+photos.forEach((photo, index)=>{
+  photo.style.zIndex = index;
 
   photo.onclick = function(){
-    document.querySelectorAll(".photo").forEach(p=>{
-      p.classList.remove("active");
-      p.style.zIndex = 1;
+
+    // pindahkan foto ini ke depan
+    let maxZ = photos.length;
+
+    photos.forEach(p=>{
+      let z = parseInt(p.style.zIndex) || 0;
+      p.style.zIndex = z - 1;
     });
 
-    this.classList.add("active");
-    this.style.zIndex = 9999;
-  };
+    this.style.zIndex = maxZ;
 
- });
-},300);
-
-function spreadPhotos(){
- let photos = document.querySelectorAll(".photo");
-
- photos.forEach((photo)=>{
-
-  let x = Math.random() * (window.innerWidth - 150);
-  let y = Math.random() * (window.innerHeight - 200);
-  let rotate = (Math.random() * 60) - 30;
-
-  photo.style.left = x + "px";
-  photo.style.top = y + "px";
-  photo.style.transform = "rotate("+rotate+"deg)";
-  photo.style.zIndex = Math.floor(Math.random() * 100);
-
-  photo.onclick = function(){
+    // efek besar dikit
     photos.forEach(p=>p.classList.remove("active"));
     this.classList.add("active");
-    this.style.zIndex = 9999;
-    this.style.transform = "scale(1.3) rotate(0deg)";
-  };
 
- });
+  };
+});
+
+function spreadPhotos(){
+  let photos = document.querySelectorAll(".photo");
+  let card = document.querySelector("#p2 .card");
+  let rect = card.getBoundingClientRect();
+
+  let centerX = rect.left + rect.width / 2;
+  let centerY = rect.top + rect.height / 2;
+
+  // 🔥 posisi FIX di sekitar card (tidak liar lagi)
+  let positions = [
+    [-140, -180], [0, -200], [140, -180],   // atas
+    [-200, -40],                [200, -40], // samping
+    [-160, 120], [0, 160], [160, 120]       // bawah
+  ];
+
+  photos.forEach((photo, i)=>{
+
+    let pos = positions[i % positions.length];
+
+    // sedikit goyangan biar natural (TAPI KECIL!)
+    let jitterX = Math.random() * 20 - 10;
+    let jitterY = Math.random() * 20 - 10;
+
+    let x = centerX + pos[0] + jitterX;
+    let y = centerY + pos[1] + jitterY;
+
+    let rotate = (Math.random() * 20) - 10;
+
+    photo.style.position = "fixed";
+    photo.style.left = x + "px";
+    photo.style.top = y + "px";
+    photo.style.transform = `rotate(${rotate}deg) scale(0.9)`;
+    photo.style.zIndex = i;
+
+    // klik zoom
+    photo.onclick = function(){
+      photos.forEach(p=>p.classList.remove("active"));
+      this.classList.add("active");
+      this.style.zIndex = 9999;
+      this.style.transform = "scale(1.3) rotate(0deg)";
+    };
+
+  });
 }
 // ================= COUNTDOWN =================
 var targetDate = new Date("2026-04-23 00:00:00");
@@ -361,6 +406,51 @@ var interval = setInterval(function(){
  }
 
 },1000);
+// ===== EFFECT NO & YES =====
+
+let noCount = 0;
+
+function jawabNo(){
+  noCount++;
+
+  let yesBtn = document.getElementById("yesBtn");
+
+  let scale = 1 + (noCount * 0.3);
+  yesBtn.style.transform = "scale(" + scale + ")";
+
+  if(noCount >= 3){
+    yesBtn.innerText = "Ayo pilih ini 😭💖";
+  }
+
+  if(noCount >= 5){
+    yesBtn.innerText = "GAK BISA NO 😤💘";
+  }
+
+  jawab(false);
+}
+
+function moveNo(){
+  let btn = document.getElementById("noBtn");
+
+  let x = Math.random() * (window.innerWidth - 100);
+  let y = Math.random() * (window.innerHeight - 50);
+
+  btn.style.position = "fixed";
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
+}
+next('p2');
+
+function moveNo(){
+  let btn = document.getElementById("noBtn");
+
+  let x = Math.random() * (window.innerWidth - 100);
+  let y = Math.random() * (window.innerHeight - 50);
+
+  btn.style.position = "fixed";
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
+}
 </script>
 
 </body>
