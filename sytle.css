@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  color: #5a4a4a;
+}
+
+/* background tidak boleh menangkap klik */
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,192,203,0.3);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.starfish {
+  position: absolute;
+  width: 40px;
+  animation: float 6s infinite ease-in-out;
+}
+
+@keyframes float {
+  50% { transform: translateY(-20px); }
+}
+
+.card {
+  backdrop-filter: blur(15px);
+  background: rgba(255,255,255,0.5);
+  padding: 25px;
+  border-radius: 25px;
+  text-align: center;
+  max-width: 500px;
+}
+
+.section {
+  display: none;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.active {
+  display: flex;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background: pink;
+  color: white;
+}
+
+button:disabled {
+  background: #ccc;
+}
+
+.music-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+/* ================= FOTO ================= */
+
+.photo-stack {
+  position: relative;
+  width: 260px;
+  height: 360px;
+  z-index: 100;
+}
+
+.photo {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transition: 0.4s;
+  pointer-events: auto;
+}
+
+/* efek tumpukan */
+.photo:nth-child(1){ transform: rotate(-10deg); }
+.photo:nth-child(2){ transform: rotate(8deg); }
+.photo:nth-child(3){ transform: rotate(-6deg); }
+.photo:nth-child(4){ transform: rotate(5deg); }
+.photo:nth-child(5){ transform: rotate(-4deg); }
+.photo:nth-child(6){ transform: rotate(3deg); }
+.photo:nth-child(7){ transform: rotate(-2deg); }
+.photo:nth-child(8){ transform: rotate(2deg); }
+.photo:nth-child(9){ transform: rotate(-1deg); }
+.photo:nth-child(10){ transform: rotate(1deg); }
+
+/* hover */
+.photo:hover {
+  transform: scale(1.05) !important;
+}
+
+/* aktif */
+.photo.active {
+  transform: scale(1.2) translateY(-30px) rotate(0deg) !important;
+  z-index: 9999 !important;
+  box-shadow: 0  20px 40px rgba(0,0,0,0.4);
+}
+
+#countdown {
+  margin-top: 10px;
+}

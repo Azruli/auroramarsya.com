@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Kamu 💖</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  color: #5a4a4a;
+  overflow: hidden;
+}
+
+/* BACKGROUND */
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,192,203,0.4);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* STAR */
+.star {
+  position: absolute;
+  width: 20px;
+  opacity: 0.7;
+  animation: float 6s infinite;
+}
+
+@keyframes float {
+  50% { transform: translateY(-20px); }
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.7);
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 500px;
+}
+
+/* SECTION */
+.section {
+  display: none;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.active {
+  display: flex;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background: pink;
+  color: white;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #ccc;
+}
+
+/* FOTO STACK */
+.photo-stack {
+  position: relative;
+  width: 260px;
+  height: 360px;
+  margin: auto;
+  z-index: 100;
+}
+
+.photo {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+/* tumpukan */
+.photo:nth-child(1){ transform: rotate(-10deg); }
+.photo:nth-child(2){ transform: rotate(8deg); }
+.photo:nth-child(3){ transform: rotate(-6deg); }
+.photo:nth-child(4){ transform: rotate(5deg); }
+.photo:nth-child(5){ transform: rotate(-4deg); }
+.photo:nth-child(6){ transform: rotate(3deg); }
+.photo:nth-child(7){ transform: rotate(-2deg); }
+.photo:nth-child(8){ transform: rotate(2deg); }
+.photo:nth-child(9){ transform: rotate(-1deg); }
+.photo:nth-child(10){ transform: rotate(1deg); }
+
+/* klik aktif */
+.photo.active {
+  transform: scale(1.2) translateY(-30px) rotate(0deg) !important;
+  z-index: 9999 !important;
+}
+
+/* MUSIC BUTTON */
+.music-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<video class="bg" autoplay muted loop>
+  <source src="https://cdn.pixabay.com/video/2023/05/30/166728-831525275_large.mp4">
+</video>
+
+<div class="overlay"></div>
+
+<!-- 🔥 INI YANG SEMPAT HILANG -->
+<div id="stars"></div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="musik.mp3">
+</audio>
+
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
+
+<!-- PAGE 1 -->
+<div class="section active" id="p1">
+<div class="card">
+<h1>Happy Birthday Sayangku 💖</h1>
+<p>Kamu adalah hal terbaik dalam hidupku 🌸</p>
+<div id="countdown"></div>
+<p id="lockMessage">💖 Tunggu ya...</p>
+<button id="startBtn" disabled>Mulai 💕</button>
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="section" id="p1b">
+<div class="card">
+<h2>a little story from us 💕</h2>
+<p>I've known Marsya since junior high school. We chatted on Facebook.
+But we had a lot of breakups, until finally
+we got back together in mid-2024, and we're still in touch now. 💖</p>
+<button onclick="next('p2')">Kenangan 📸</button>
+</div>
+</div>
+
+<!-- PAGE FOTO -->
+<div class="section" id="p2">
+<div class="card">
+<h2>Kenangan Kita 💖</h2>
+
+<div class="photo-stack">
+<img src="foto1.jpg" class="photo">
+<img src="foto2.jpg" class="photo">
+<img src="foto3.jpg" class="photo">
+<img src="foto4.jpg" class="photo">
+<img src="foto5.jpg" class="photo">
+<img src="foto6.jpg" class="photo">
+<img src="foto7.jpg" class="photo">
+<img src="foto8.jpg" class="photo">
+<img src="foto9.jpg" class="photo">
+<img src="foto10.jpg" class="photo">
+</div>
+
+<button onclick="next('p3')">Video 🎥</button>
+</div>
+</div>
+
+<!-- VIDEO -->
+<div class="section" id="p3">
+<div class="card">
+<h2>Video Kita 🎥</h2>
+<video controls width="250">
+  <source src="kenangan.mp4">
+</video>
+<button onclick="next('p4')">Lanjut 💌</button>
+</div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="section" id="p4">
+<div class="card">
+<h2>Untuk Kamu 💖</h2>
+<p>Sejujur nya sejak kamu hadir... kamu adalah rumah 💖</p>
+<p>Aku akan selalu ada untuk kamu 💕</p>
+<button onclick="next('p5')">Lanjut 💕</button>
+</div>
+</div>
+
+<!-- PAGE 5 -->
+<div class="section" id="p5">
+<div class="card">
+<h2>Surat Untuk Kamu 💌</h2>
+<p>Terima kasih sudah bertahan sejauh ini 💖<br>
+Aku akan terus berusaha jadi yang terbaik 💕</p>
+<button onclick="next('p6')">Terakhir 💖</button>
+</div>
+</div>
+
+<!-- PAGE 6 -->
+<div class="section" id="p6">
+<div class="card">
+<h2>Aku Mau Tanya 💍</h2>
+<p>Kamu mau terus sama aku kan? 💖</p>
+<button onclick="jawab(true)">Mau 💕</button>
+<button onclick="jawab(false)">Gamau 😢</button>
+<p id="jawaban"></p>
+</div>
+</div>
+
+<script>
+
+// NAV
+function next(id){
+ document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+}
+
+// STAR
+let stars = document.getElementById("stars");
+for(let i=0;i<20;i++){
+ let s=document.createElement("img");
+ s.src="https://cdn-icons-png.flaticon.com/512/616/616490.png";
+ s.className="star";
+ s.style.top=Math.random()*100+"%";
+ s.style.left=Math.random()*100+"%";
+ stars.appendChild(s);
+}
+
+// MUSIC
+function toggleMusic(){
+ let m=document.getElementById("music");
+ if(m.paused){
+  m.play().catch(()=>alert("Klik lagi ya 🎵"));
+ } else {
+  m.pause();
+ }
+}
+
+// JAWAB
+function jawab(res){
+ let j = document.getElementById("jawaban");
+ j.innerHTML = res ? "💖 Aku juga sayang kamu!" : "😢 Jangan gitu...";
+}
+
+// COUNTDOWN
+let birthday = new Date().getTime() + 5000;
+
+let interval = setInterval(()=>{
+ let now = new Date().getTime();
+ let d = birthday - now;
+
+ document.getElementById("countdown").innerHTML =
+  Math.floor(d/1000)+" detik";
+
+ if(d <= 0){
+  clearInterval(interval);
+
+  document.getElementById("countdown").innerHTML = "🎉 Sudah waktunya!";
+  
+  let btn = document.getElementById("startBtn");
+  btn.disabled = false;
+  btn.onclick = ()=>next('p1b');
+
+  document.getElementById("lockMessage").innerHTML="💖 Sekarang sudah bisa dibuka!";
+ }
+},1000);
+
+// FOTO CLICK FIX
+setTimeout(()=>{
+ document.querySelectorAll(".photo").forEach((photo, index)=>{
+
+  photo.style.zIndex = index + 1;
+
+  photo.onclick = function(){
+    document.querySelectorAll(".photo").forEach(p=>{
+      p.classList.remove("active");
+      p.style.zIndex = 1;
+    });
+
+    this.classList.add("active");
+    this.style.zIndex = 9999;
+  };
+
+ });
+},300);
+
+</script>
+
+</body>
+</html>
